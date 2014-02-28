@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-milestone" }
+        mavenLocal()
+    }
+    dependencies {
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -7,7 +16,8 @@ apply plugin: 'jetty'
 
 // tag::repositories[]
 repositories {
-    mavenCentral()
+    	mavenCentral()
+	maven { url "http://repo.spring.io/libs-milestone" }
 }
 // end::repositories[]
 
@@ -20,7 +30,18 @@ jar {
 
 // tag::dependencies[]
 dependencies {
-    compile 'org.springframework:spring-context:4.0.2.RELEASE'
+ 	compile 'org.thymeleaf:thymeleaf:2.0.18'
+  	compile 'org.thymeleaf:thymeleaf-spring3:2.0.18'
+ 	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.0.1' 
+	compile 'org.springframework:spring-core:3.2.3.RELEASE' 
+   	runtime 'javax.servlet:jstl:1.1.2'
+    	compile 'org.springframework:spring-context:4.0.2.RELEASE'
+ 	compile 'org.springframework:spring-webmvc:4.0.2.RELEASE'
+    	testCompile("junit:junit")
+  	testCompile 'org.springframework:spring-test:3.2.3.RELEASE'
+  	testCompile 'junit:junit:4.11'
+  	testCompile "org.mockito:mockito-core:1.9.5" 
+	providedCompile 'javax.servlet:servlet-api:2.5'
 } 
 // end::dependencies[]
 
@@ -29,3 +50,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
 // end::wrapper[]
+
+jettyRunWar.contextPath = ''
+
