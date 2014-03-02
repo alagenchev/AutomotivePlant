@@ -4,11 +4,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class GreetingController {
+public class IndexController {
 
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String loadHomePage(Model m) {
-		m.addAttribute("name", "CodeTudftr");
-		return "home";
+		m.addAttribute("name", "ivan2");
+		return "index";
 	}
 }

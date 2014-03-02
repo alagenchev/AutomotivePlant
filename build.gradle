@@ -53,3 +53,7 @@ task wrapper(type: Wrapper) {
 
 jettyRunWar.contextPath = ''
 
+jettyRun {
+reload = "automatic"
+scanIntervalSeconds = 1
+}
