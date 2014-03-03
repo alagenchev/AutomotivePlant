@@ -1,14 +1,20 @@
 package controllers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import services.CarFactory;
+
 @Controller
 public class IndexController {
-
+	
+	@Autowired
+	private CarFactory carFactory;
+	
 	@RequestMapping("/")
 	public String loadHomePage(Model m) {
-		m.addAttribute("name", "ivan2");
+		m.addAttribute("car", carFactory.BuildCar());
 		return "index";
 	}
 }

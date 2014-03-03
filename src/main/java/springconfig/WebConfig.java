@@ -13,33 +13,8 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="controllers")
+@ComponentScan({"controllers", "services"})
 public class WebConfig {
-
-	/*
-	@Bean
-	public InternalResourceViewResolver viewResolver() {
-		InternalResourceViewResolver resolver = 
-                    new InternalResourceViewResolver();
-		resolver.setPrefix("/");
-		resolver.setSuffix(".jsp");
-		return resolver;
-	}*/
-	
-	/*
-	  @Bean public ViewResolver viewResolver() {
-	        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-	        templateResolver.setTemplateMode("HTML5");
-	        templateResolver.setPrefix("/");
-	        templateResolver.setSuffix(".html");
-	        SpringTemplateEngine engine = new SpringTemplateEngine();
-	        engine.setTemplateResolver(templateResolver);
-	 
-	        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-	        viewResolver.setTemplateEngine(engine);
-	        return viewResolver;
-	    }
-	 */
 
 	  @Bean
 	  public ServletContextTemplateResolver templateResolver() {

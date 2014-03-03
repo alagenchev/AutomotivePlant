@@ -4,6 +4,12 @@
     <title>Sample Application</title>
   </head>
   <body>
-	<p th:text="${name}"></p>
+	<p th:text="${'The car color is ' + car.color}"></p>
+	<p>
+	With wheels of size: 
+	</p>
+	<p th:each="wheel, iterStat : ${car.wheels}">
+	<label th:text="${'Wheel '+ iterStat.index + ', size is ' + wheel.size}"></label>
+	</p>
   </body>
 </html>
