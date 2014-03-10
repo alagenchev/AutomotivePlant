@@ -11,32 +11,37 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
+
 @Configuration
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Autowired
 	public void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
-		auth.inMemoryAuthentication()
-		.withUser("user").password("password")
-				.roles("USER", "TELLER");
+		 auth.authenticationProvider(authenticationProvider);
 	}
 	
+	@Autowired
+	CustomAuthenticationProvider authenticationProvider;
+	
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	    http
+	    .authenticationProvider(authenticationProvider)
 	        .authorizeRequests()                                                      
 	            .antMatchers("/**").hasRole("USER")                            
-	            .anyRequest().authenticated()                                                   
+	            .anyRequest().authenticated()                                                
 	            .and()
 	        // ...
 	        .formLogin();
 	}
-
+/*
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
 		// TODO Auto-generated method stub
 		return new CustomAuthenticationManager();
-	}
+	}*/
 }
