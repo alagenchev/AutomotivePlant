@@ -8,41 +8,46 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"controllers", "services"})
+@ComponentScan({ "controllers", "services" })
 public class WebConfig {
 
-	  @Bean
-	  public ServletContextTemplateResolver templateResolver() {
-	    ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-	    resolver.setPrefix("/views/");
-	    resolver.setSuffix(".html");
-	    //NB, selecting HTML5 as the template mode.
-	    resolver.setTemplateMode("HTML5");
-	    resolver.setCacheable(false);
-	    return resolver;
 
-	  }
 
-	  public SpringTemplateEngine templateEngine() {
-	    SpringTemplateEngine engine = new SpringTemplateEngine();
-	    engine.setTemplateResolver(templateResolver());
-	    return engine;
-	  }
+	@Bean
+	public ViewResolver jspViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/views/jsp/");
+		resolver.setSuffix(".jsp");
+		resolver.setViewNames(new String[] { "jsp_*" });
+		resolver.setOrder(2);
 
-	  @Bean
-	  public ViewResolver viewResolver() {
+		return resolver;
+	}
 
-	    ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-	    viewResolver.setTemplateEngine(templateEngine());
-	    viewResolver.setOrder(1);
-	    viewResolver.setViewNames(new String[]{"*"});
-	    viewResolver.setCache(false);
-	    return viewResolver;
-	  }
+	@Bean
+	public ViewResolver thymeLeafViewResolver() {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(getThymeleafTemplateResolver());
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(templateEngine);
+		viewResolver.setOrder(1);
+		viewResolver.setViewNames(new String[] { "th_*" });
+		viewResolver.setCache(false);
+		return viewResolver;
+	}
+	
+	private ServletContextTemplateResolver getThymeleafTemplateResolver() {
+		ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
+		resolver.setPrefix("/views/thymeleaf/");
+		resolver.setSuffix(".html");
+		resolver.setTemplateMode("HTML5");
+		resolver.setCacheable(false);
+		return resolver;
+
+	}
 
 }
