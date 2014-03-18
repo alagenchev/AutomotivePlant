@@ -15,8 +15,6 @@ public class IndexController {
 	private CarFactory carFactory;
 	
 	@RequestMapping("/")
-	@Secured("ROLE_TELLER")
-	@PreAuthorize("@mySecurityService.hasPermission('special', #m)")
 	public String loadHomePage(Model m) {
 		m.addAttribute("car", carFactory.BuildCar());
 		return "th_index";
